@@ -1,0 +1,12 @@
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+bin/
+.settings/
+.project
+.classpath
+
+.DS_Store
+
+.out
