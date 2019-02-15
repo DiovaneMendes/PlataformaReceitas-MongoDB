@@ -26,4 +26,5 @@ public interface RecipeService {
 
 	void deleteComment(String id, String commentId);
 
+	List<Recipe> todos();
 }

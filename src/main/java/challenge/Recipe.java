@@ -55,10 +55,6 @@ public class Recipe {
         this.description = description;
     }
 
-    public List<String> getLikes() {
-        return likes;
-    }
-
     public void setLikes(List<String> likes) {
         this.likes = likes;
     }
@@ -69,10 +65,6 @@ public class Recipe {
 
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    public List<RecipeComment> getComments() {
-        return comments;
     }
 
     public void setComments(List<RecipeComment> comments) {

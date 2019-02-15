@@ -1,14 +1,15 @@
 package challenge;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -16,13 +17,8 @@ public class RecipeServiceImpl implements RecipeService {
 	//sudo systemctl enable mongod
 	//sudo systemctl start mongod
 
+	@Autowired
 	private MongoOperations mongoOperations;
-	private MongoTemplate mongoTemplate;
-
-	public RecipeServiceImpl(MongoOperations mongoOperations, MongoTemplate mongoTemplate) {
-		this.mongoOperations = mongoOperations;
-		this.mongoTemplate = mongoTemplate;
-	}
 
 	@Override
 	public Recipe save(Recipe recipe) {
@@ -54,7 +50,11 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public List<Recipe> listByIngredient(String ingredient) {
-		return null;
+		return mongoOperations.find(
+				new Query(Criteria.where("ingredients")
+						.in(ingredient))
+						.with(new Sort(Sort.Direction.ASC, "title")),
+				Recipe.class);
 	}
 
 	@Override
@@ -87,4 +87,8 @@ public class RecipeServiceImpl implements RecipeService {
 
 	}
 
+	@Override
+	public List<Recipe> todos(){
+		return mongoOperations.findAll(Recipe.class);
+	}
 }

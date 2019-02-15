@@ -13,6 +13,7 @@ public class RecipeController {
 	private RecipeService service;
 
 	@PostMapping("/recipe")
+	@ResponseBody
 	public Recipe save(@RequestBody Recipe recipe) {
 		return service.save(recipe);
 	}
@@ -22,8 +23,9 @@ public class RecipeController {
 		service.update(id, recipe);
 	}
 
-	public void delete() {
-		service.delete(null);
+	@DeleteMapping("/recipe/{id}")
+	public void delete(@PathVariable String id) {
+		service.delete(id);
 	}
 
 	@GetMapping("/recipe/{id}")
@@ -31,8 +33,10 @@ public class RecipeController {
 		return service.get(id);
 	}
 
-	public List<Recipe> listByIngredient() {
-		return service.listByIngredient(null);
+	@GetMapping("/recipe/ingredient")
+	@ResponseBody
+	public List<Recipe> listByIngredient(@RequestParam String ingredient) {
+		return service.listByIngredient(ingredient);
 	}
 
 	public List<Recipe> search() {
@@ -57,6 +61,11 @@ public class RecipeController {
 
 	public void deleteComment() {
 		service.deleteComment(null, null);
+	}
+
+	@GetMapping("/todos")
+	public List<Recipe> todos(){
+		return service.todos();
 	}
 
 }
